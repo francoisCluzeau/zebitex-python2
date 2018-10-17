@@ -27,7 +27,7 @@ client.new_order('ltc', # quote currency
   '0.123', # volume
   'ltcbtc', # market
   'limit' # order type
-).json()
+)
 ```
 
 * list open orders
@@ -38,5 +38,5 @@ client.open_orders(page='1', per='11').json()
 * cancel an opened order
 ```
 let order_id=1234
-client.cancelOrder(order_id).json()
+client.cancel_order(order_id).json()
 ```
