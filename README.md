@@ -33,7 +33,7 @@ client.new_order('ltc', # quote currency
 
 * list open orders
 ```
-client.open_orders(page='1', per='11').json
+client.open_orders(page='1', per='11').json()
 ```
 
 * cancel an opened order
