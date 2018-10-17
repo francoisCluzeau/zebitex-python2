@@ -74,7 +74,7 @@ class Zebitex:
         return self._delete_private_request('api/v1/orders/cancel_all')
 
     def cancel_order(self,id_order):
-        return client._delete_private_request('api/v1/orders/'+str(id_order)+'/cancel', { 'id':str(id_order) })
+        return self._delete_private_request('api/v1/orders/'+str(id_order)+'/cancel', { 'id':str(id_order) })
 
     def new_order(self,bid, ask, side, price, amount, market, ord_type):
         params={"bid":bid, "ask":ask, "side":side, "price":price,

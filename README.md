@@ -16,7 +16,6 @@ client = api.Zebitex(apikey='<Access key>', private_key='<Secret key>', test_env
 * retrieve you assets balances
 ```
 client.funds().json()
-
 ```
 
 * open a new order
