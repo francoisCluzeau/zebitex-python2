@@ -1,5 +1,5 @@
 #!/usr/bin/env python2
-# coding: utf-8 
+# coding: utf-8
 from collections import OrderedDict
 import time
 import requests
@@ -20,7 +20,7 @@ class Zebitex:
 
     def _sign_request(self,method, path, nonce, query=None):
         args = json.dumps(query) if query else '{}'
-        payload = "|".join([method, '/' + path, str(nonce), args ])
+        payload = "|".join([method, '/' + path, str(nonce), args ]).replace(' ', '')
         return hmac.new(self.priv, payload, hashlib.sha256).hexdigest()
 
     def _private_request(self, method, path, query=None):
@@ -34,7 +34,7 @@ class Zebitex:
     def _public_request(self, path, query = None):
         url = self.url+path
         return requests.get(url, params=query, json=True)
-    
+
     def _post_private_request(self, path, query=None):
         return self._private_request('POST', path, query)
 
@@ -61,7 +61,7 @@ class Zebitex:
     def public_trade_history(self, market):
         return self._public_request('api/v1/orders/trade_history', {"market":market})
 
-    
+
     def open_orders(self, page=1, per=10):
         params = {"page":page, "per":per}
         return self._get_private_request('api/v1/orders/current', params)
@@ -69,13 +69,13 @@ class Zebitex:
     def trade_history(self, side, start_date, end_date, page, per):
         params = {"side":side, "start_date":start_date, "end_date":end_date, "page":page, "per":per}
         return self._get_private_request('api/v1/history/trades', params)
-        
+
     def cancel_all_orders(self):
         return self._delete_private_request('api/v1/orders/cancel_all')
 
     def cancel_order(self,id_order):
-        return self._delete_private_request('api/v1/orders/'+str(id_order)+'/cancel')
-    
+        return self._delete_private_request('api/v1/orders/'+str(id_order)+'/cancel', { 'id':str(id_order) })
+
     def new_order(self,bid, ask, side, price, amount, market, ord_type):
         params={"bid":bid, "ask":ask, "side":side, "price":price,
                 "amount":amount, "market":market, "ord_type":ord_type}
