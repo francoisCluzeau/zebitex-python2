@@ -23,6 +23,7 @@ class Zebitex:
         payload = "|".join([method, '/' + path, str(nonce), args ]).replace(' ', '')
         return hmac.new(self.priv, payload, hashlib.sha256).hexdigest()
 
+    '''
     def _private_request(self, method, path, query=None):
         params = OrderedDict(query) if query else None
         nonce = int(time.time())*1000
@@ -30,6 +31,19 @@ class Zebitex:
         header = self._build_auth_header(nonce, signature, params)
         url = self.url+path
         return requests.request(method,url, params=params, headers=header, json=True)
+    '''
+    def _private_request(self, method, path, query=None):
+        params = OrderedDict(query) if query else None
+        nonce = int(time.time())*1000
+        signature = self._sign_request(method, path, nonce, params)
+        header = self._build_auth_header(nonce, signature, params)
+        url = self.url+path
+        if method == 'POST':
+            json_payload = json.dumps(params)
+            params = None
+        else:
+            json_payload=True
+        return requests.request(method,url, params=params, headers=header, json=json_payload)
 
     def _public_request(self, path, query = None):
         url = self.url+path
