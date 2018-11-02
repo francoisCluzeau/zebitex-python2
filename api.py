@@ -25,8 +25,8 @@ class Zebitex:
 
     '''
     def _private_request(self, method, path, query=None):
-        params ={k: str(v) for k,v in OrderedDict(query).items()} if query else None
-        nonce = int(time.time()*1000)
+        params = OrderedDict(query) if query else None
+        nonce = int(time.time())*1000
         signature = self._sign_request(method, path, nonce, params)
         header = self._build_auth_header(nonce, signature, params)
         url = self.url+path
