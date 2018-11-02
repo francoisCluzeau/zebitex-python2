@@ -24,8 +24,8 @@ class Zebitex:
         return hmac.new(self.priv, payload, hashlib.sha256).hexdigest()
 
     def _private_request(self, method, path, query=None):
-        params = OrderedDict(query) if query else None
-        nonce = int(time.time())*1000
+        params ={k: str(v) for k,v in OrderedDict(query).items()} if query else None
+        nonce = int(time.time()*1000)
         signature = self._sign_request(method, path, nonce, params)
         header = self._build_auth_header(nonce, signature, params)
         url = self.url+path
