@@ -61,6 +61,13 @@ class Zebitex:
     def public_trade_history(self, market):
         return self._public_request('api/v1/orders/trade_history', {"market":market})
 
+    def get_withdrawal_addresses(self, asset):
+        params = { "currency": asset}
+        return self._get_private_request('api/v1/fund_sources', params)
+    
+    def new_withdrawal(self,currency, fund_id, amount):
+        params = {"code":currency, "fund_source_id": fund_id, "sum":amount}
+        return self._post_private_request('api/v1/withdrawals', params)
 
     def open_orders(self, page=1, per=10):
         params = {"page":page, "per":per}
