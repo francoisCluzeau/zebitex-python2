@@ -9,11 +9,11 @@ python 2.7 client for Zebitex exchange API
 
 ```
 import api
-test_env = true # set to false to use in production
+test_env = True # set to False to use in production
 client = api.Zebitex(apikey='<Access key>', private_key='<Secret key>', test_env) # instantiate your client
 ```
 
-* retrieve you assets balances
+* retrieve your assets balances
 ```
 client.funds().json()
 ```
