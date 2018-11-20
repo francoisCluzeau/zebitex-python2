@@ -87,3 +87,7 @@ class Zebitex:
         params={"bid":bid, "ask":ask, "side":side, "price":price,
                 "amount":amount, "market":market, "ord_type":ord_type}
         return self._post_private_request('api/v1/orders', params)
+    def new_market_order(self,bid, ask, side,  amount, market ):
+        params={"bid":bid, "ask":ask, "side":side,
+                "amount":amount, "market":market, "ord_type":'market'}
+        return self._post_private_request('api/v1/orders', params)
