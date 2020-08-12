@@ -11,7 +11,7 @@ class Zebitex:
     def __init__(self, apikey,private_key, is_dev=False):
         self.apikey = apikey
         self.priv = private_key
-        self.url = 'https://staging.zebitex.com/' if is_dev else 'https://zebitex.com/'
+        self.url = 'https://api-staging.zebitex.com/' if is_dev else 'https://api.zebitex.com/'
 
     def _build_auth_header(self, nonce, signature, query=None):
         params = ";".join(query.keys()) if query else ''
